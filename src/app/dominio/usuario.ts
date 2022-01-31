@@ -5,5 +5,6 @@ export class Usuario {
     telefono: string;
     correo: string;
     contrasenia: string;
+    estado: any;
   }
   
