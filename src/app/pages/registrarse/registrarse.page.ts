@@ -15,6 +15,7 @@ export class RegistrarsePage implements OnInit {
   telefono: any;
   correo: any;
   contrasenia: any;
+  estado: "free";
 
   usuario: Usuario = new Usuario();
 
@@ -46,6 +47,7 @@ export class RegistrarsePage implements OnInit {
         telefono: this.telefono,
         correo: this.correo,
         contrasenia: this.contrasenia,
+        estado: this.estado,
         contacto: this.usuario,
       },
     };
