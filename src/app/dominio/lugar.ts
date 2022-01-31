@@ -1,9 +1,9 @@
 export class Lugar {
-  uid: string;
-  nombre: string;
-  direccion: string;
-  telefono: string;
-  correo: string;
-  contrasenia: string;
-  estado: any;
+  id: string;
+  referencia: string;
+  dueno: string;
+  ubicacion: {
+    lat: number;
+    lng: number;
+  };
 }

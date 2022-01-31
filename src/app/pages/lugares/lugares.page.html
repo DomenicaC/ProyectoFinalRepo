@@ -1,9 +1,46 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>lugares</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Page Mapa</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item (click)="addDirection()">
+    <ion-label class="normal">
+      Ubicación
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" color="danger" name="location"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+      Referencia a la ubicación
+    </ion-label>
+    <ion-input [(ngModel)]="mapa.referencia" class="normal" type="text" inputmode="text">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+      Dueño
+    </ion-label>
+    <ion-input [(ngModel)]="mapa.dueno" class="normal" type="text" inputmode="text">
+    </ion-input>
+  </ion-item>
+
+  <section>
+    <header>Guardar Ubicacion</header>
+    <ion-button expand="block" (click)="guardar()">Guardar</ion-button>
+  </section>
+
+
 
 </ion-content>
