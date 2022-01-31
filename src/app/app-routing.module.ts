@@ -13,11 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'registrarse',
-    loadChildren: () => import('./registrarse/registrarse.module').then( m => m.RegistrarsePageModule)
+    loadChildren: () => import('./pages/registrarse/registrarse.module').then( m => m.RegistrarsePageModule)
   },
   {
-    path: 'registrarse',
-    loadChildren: () => import('./pages/registrarse/registrarse.module').then( m => m.RegistrarsePageModule)
+    path: 'inicio-sesion',
+    loadChildren: () => import('./pages/inicio-sesion/inicio-sesion.module').then( m => m.InicioSesionPageModule)
   }
 ];
 

@@ -1,9 +1,70 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>registrarse</ion-title>
+    <ion-title>Registro de usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="./avatar-finn.png" />
+        </ion-avatar>
+        <ion-label>
+          <h1>Turisteando</h1>
+          <h2>Ecuador</h2>
+        </ion-label>
+      </ion-item>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input name="txtNombre" [(ngModel)]="usuario.nombre"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input name="txtDir" [(ngModel)]="usuario.direccion"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input name="txtTelf" [(ngModel)]="usuario.telefono"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input name="txtCorreo" [(ngModel)]="usuario.correo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input name="txtContra" [(ngModel)]="usuario.contrasenia"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+
+
+    <section>
+      <ion-button size="small" color="medium" (click)="guardar()">Registrarse</ion-button>
+      <ion-button size="small" color="medium">Inicio Sesión</ion-button>
+    </section>
+    <section>
+      <header>Registrarse con:</header>
+      <ion-button size="small" color="warning">
+        <ion-icon name="logo-google"></ion-icon>
+        Google
+      </ion-button>
+      <ion-button size="small" color="tertiary">
+        <ion-icon name="logo-facebook">
+        </ion-icon> Facebook
+      </ion-button>
+    </section>
+
+  </ion-card>
 
 </ion-content>
