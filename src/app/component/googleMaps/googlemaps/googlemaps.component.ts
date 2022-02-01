@@ -8,7 +8,6 @@ import {
   ViewChild,
   Inject,
 } from '@angular/core';
-
 import { ModalController } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
@@ -23,7 +22,6 @@ declare var google: any;
   styleUrls: ['./googlemaps.component.scss'],
 })
 export class GooglemapsComponent implements OnInit {
-  
   // Coordenadas principales
   @Input() posicion = {
     lat: -2.891918747370772,
@@ -121,20 +119,22 @@ export class GooglemapsComponent implements OnInit {
   }*/
 
   setInfoWindow(marker: any, titulo: string, subtitulo: string) {
-
-    const contentString  =  '<div id="contentInsideMap">' +
-                            '<div>' +
-                            '</div>' +
-                            '<p style="font-weight: bold; margin-bottom: 5px; color : black">' + titulo + '</p>' +
-                            '<div id="bodyContent">' +
-                            '<p class"normal m-0 style="color : black">'
-                            + subtitulo + '</p>' +
-                            '</div>' +
-                            '</div>';
+    const contentString =
+      '<div id="contentInsideMap">' +
+      '<div>' +
+      '</div>' +
+      '<p style="font-weight: bold; margin-bottom: 5px; color : black">' +
+      titulo +
+      '</p>' +
+      '<div id="bodyContent">' +
+      '<p class"normal m-0 style="color : black">' +
+      subtitulo +
+      '</p>' +
+      '</div>' +
+      '</div>';
     this.infowindow.setContent(contentString);
     this.infowindow.open(this.map, marker);
-
-}
+  }
 
   async mylocation() {
     console.log('mylocation() click');
