@@ -40,16 +40,16 @@ export class RegistrarsePage implements OnInit {
   }
 
   onRegister(email, password) {
-    try {
-      const user = this.authService.register(email.value, password.value);
-      if (user) {
-        console.log('User ---> ', user);
-        // Verificar email
-      }
-    } catch (error) {
-      console.log('Error en page registrar', error);
-    }
-
+    this.authService
+      .register(email.value, password.value)
+      .then((res) => {
+        // Do something here
+        this.authService.sendVerificationEmail();
+        this.router.navigate(['verify-email']);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
     /* console.log('Email ', email);
     console.log('password ', password);*/
   }

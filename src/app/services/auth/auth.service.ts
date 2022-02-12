@@ -8,13 +8,18 @@ import firebase from 'firebase/compat/app';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/shared/user.interface';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   public user$: Observable<User>;
-  constructor(public authFire: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(
+    public authFire: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router
+  ) {
     this.user$ = authFire.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -49,13 +54,12 @@ export class AuthService {
     return this.authFire.createUserWithEmailAndPassword(email, password);
   }
 
-
-  async sendVerificationEmail(): Promise<void> {
-    try {
-      return (await this.authFire.currentUser).sendEmailVerification();
-    } catch (error) {
-      console.log('Error send verified email -> ', error);
-    }
+  async sendVerificationEmail() {
+    return (await this.authFire.currentUser)
+      .sendEmailVerification()
+      .then(() => {
+        this.router.navigate(['verify-email']);
+      });
   }
 
   async login(email: string, password: string): Promise<User> {
@@ -91,5 +95,14 @@ export class AuthService {
       displayName: user.displayName,
     };
     return userRef.set(data, { merge: true });
+  }
+
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user !== null && user.emailVerified !== false ? true : false;
+  }
+  get isEmailVerified(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.emailVerified !== false ? true : false;
   }
 }

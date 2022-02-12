@@ -10,7 +10,7 @@
     <ion-card-header>
       <ion-item>
         <ion-avatar slot="start">
-          <img src="../../Img/marker.pngp" />
+          <img src="./marker.png" />
         </ion-avatar>
         <ion-label>
           <h1>Turisteando</h1>
@@ -39,25 +39,20 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button size="small" color="medium" expand="block">Registrarse</ion-button>
+            <ion-button size="small" color="medium" expand="block" routerLink="/registrarse">Registrarse</ion-button>
           </ion-col>
         </ion-row>
 
-        <header>Iniciar con:</header>
-        <ion-button size="small" color="warning" (click)="loginGoogle()">
+        <center >
+          <header width=50px>Iniciar con:</header>
+        </center>
+        <ion-button size="small" color="warning" expand="block" (click)="loginGoogle()">
           <ion-icon name="logo-google"></ion-icon>
           Google
         </ion-button>
       </form>
     </ion-card-content>
 
-    <section>
-
-      <ion-button size="small" color="tertiary">
-        <ion-icon name="logo-facebook">
-        </ion-icon> Facebook
-      </ion-button>
-    </section>
   </ion-card>
 
 </ion-content>

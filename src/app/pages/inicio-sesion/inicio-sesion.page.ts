@@ -38,25 +38,26 @@ export class InicioSesionPage implements OnInit {
     });
   }
 
-
-  login(email, password){
+  login(email, password) {
     try {
       const user = this.authService.login(email.value, password.value);
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
+        this.router.navigate(['principal']);
       }
     } catch (error) {
       console.log('Error en page login', error);
     }
   }
 
-  loginGoogle(){
+  loginGoogle() {
     try {
       const user = this.authService.loginGoogle();
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
+        this.router.navigate(['principal']);
       }
     } catch (error) {
       console.log('Error en page login google', error);

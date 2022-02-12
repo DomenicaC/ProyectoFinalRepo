@@ -6,4 +6,47 @@
 
 <ion-content>
 
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="./marker.png" />
+        </ion-avatar>
+        <ion-label>
+          <h1>Turisteando</h1>
+          <h2>Ecuador</h2>
+        </ion-label>
+      </ion-item>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <h2>Gracias por registrarte en nuestra aplicacion</h2>
+      <p>
+        Por favor revise su correo electrónico y haga clic en el enlace para verificar su dirección de correo
+        electrónico.
+      </p>
+
+      <p>
+        Si no ha resivido un correo, por favor presione el boton y se le reenviara uno nuevo
+        <span>Verifique si el correo no fue enviado a su SPAM</span>
+      </p>
+
+      <ion-row>
+        <ion-col>
+          <ion-button size="small" color="medium" (click)="authService.SendVerificationMail()" expand="block">
+            Reenviar email
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button size="small" color="medium" routerLink="/inicio-sesion" expand="block">
+            Inicio Sesion
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>
