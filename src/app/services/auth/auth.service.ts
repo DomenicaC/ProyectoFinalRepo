@@ -14,8 +14,8 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AuthService {
   public user$: Observable<User>;
-  constructor(public auth: AngularFireAuth, private afs: AngularFirestore) {
-    this.user$ = auth.authState.pipe(
+  constructor(public authFire: AngularFireAuth, private afs: AngularFirestore) {
+    this.user$ = authFire.authState.pipe(
       switchMap((user) => {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -27,7 +27,7 @@ export class AuthService {
 
   async resetPassword(email: string): Promise<void> {
     try {
-      return this.auth.sendPasswordResetEmail(email);
+      return this.authFire.sendPasswordResetEmail(email);
     } catch (error) {
       console.log('Error Logout -> ', error);
     }
@@ -35,7 +35,7 @@ export class AuthService {
 
   async loginGoogle(): Promise<User> {
     try {
-      const { user } = await this.auth.signInWithPopup(
+      const { user } = await this.authFire.signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
       );
       this.updateUserData(user);
@@ -45,22 +45,14 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string): Promise<User> {
-    try {
-      const { user } = await this.auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await this.sendVerificationEmail();
-      return user;
-    } catch (error) {
-      console.log('Error register-> ', error);
-    }
+  register(email, password) {
+    return this.authFire.createUserWithEmailAndPassword(email, password);
   }
+
 
   async sendVerificationEmail(): Promise<void> {
     try {
-      return (await this.auth.currentUser).sendEmailVerification();
+      return (await this.authFire.currentUser).sendEmailVerification();
     } catch (error) {
       console.log('Error send verified email -> ', error);
     }
@@ -68,7 +60,7 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<User> {
     try {
-      const { user } = await this.auth.signInWithEmailAndPassword(
+      const { user } = await this.authFire.signInWithEmailAndPassword(
         email,
         password
       );
@@ -81,7 +73,7 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      await this.auth.signOut();
+      await this.authFire.signOut();
     } catch (error) {
       console.log('Error Logout -> ', error);
     }

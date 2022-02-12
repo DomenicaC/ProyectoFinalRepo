@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Usuario } from 'src/app/dominio/usuario';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class InicioSesionPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -34,6 +36,31 @@ export class InicioSesionPage implements OnInit {
         console.log(this.usuario);
       }
     });
+  }
+
+
+  login(email, password){
+    try {
+      const user = this.authService.login(email.value, password.value);
+      if (user) {
+        console.log('User ---> ', user);
+        // Verificar email
+      }
+    } catch (error) {
+      console.log('Error en page login', error);
+    }
+  }
+
+  loginGoogle(){
+    try {
+      const user = this.authService.loginGoogle();
+      if (user) {
+        console.log('User ---> ', user);
+        // Verificar email
+      }
+    } catch (error) {
+      console.log('Error en page login google', error);
+    }
   }
 
   ingresar() {

@@ -13,8 +13,8 @@
           <img src="src/app/Img/marker.png" />
         </ion-avatar>
         <ion-label>
-          <h1>Turisteando</h1>
-          <h2>Ecuador</h2>
+          <h1 >Turisteando</h1>
+          <h2 >Ecuador</h2>
         </ion-label>
       </ion-item>
     </ion-card-header>
@@ -29,22 +29,24 @@
 
         <ion-item lines="full">
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input type="text" #password required></ion-input>
+          <ion-input type="password" #password required></ion-input>
         </ion-item>
+
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" size="small" color="medium" (click)="onRegister(email, password)" expand="block">
+              Registrarse
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button size="small" color="medium" expand="block">Inicio Sesión</ion-button>
+          </ion-col>
+        </ion-row>
       </form>
     </ion-card-content>
 
     <section>
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" size="small" color="medium" (click)="onRegister(email, password)" expand="block">
-            Registrarse
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button size="small" color="medium" expand="block">Inicio Sesión</ion-button>
-        </ion-col>
-      </ion-row>
+      
 
 
     </section>

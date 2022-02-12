@@ -39,9 +39,9 @@ export class RegistrarsePage implements OnInit {
     });
   }
 
-  async onRegister(email, password) {
+  onRegister(email, password) {
     try {
-      const user = await this.authService.register(email.value, password.value);
+      const user = this.authService.register(email.value, password.value);
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
@@ -50,7 +50,7 @@ export class RegistrarsePage implements OnInit {
       console.log('Error en page registrar', error);
     }
 
-   /* console.log('Email ', email);
+    /* console.log('Email ', email);
     console.log('password ', password);*/
   }
 

@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'lugares',
     loadChildren: () => import('./pages/lugares/lugares.module').then( m => m.LugaresPageModule)
+  },
+  {
+    path: 'verify-email',
+    loadChildren: () => import('./pages/verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
   }
 ];
 

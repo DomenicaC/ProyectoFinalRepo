@@ -21,27 +21,38 @@
 
     <ion-card-content>
 
-      <ion-item>
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input name="txtCorreo" [(ngModel)]="correo"></ion-input>
-      </ion-item>
+      <form>
+        <ion-item lines="full">
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input type="text" #email required></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input name="txtContra"></ion-input>
-      </ion-item>
+        <ion-item lines="full">
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" #password required></ion-input>
+        </ion-item>
 
+        <ion-row>
+          <ion-col>
+            <ion-button type="submit" size="small" color="medium" (click)="login(email, password)" expand="block">
+              Inicio Sesión
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button size="small" color="medium" expand="block">Registrarse</ion-button>
+          </ion-col>
+        </ion-row>
+
+        <header>Iniciar con:</header>
+        <ion-button size="small" color="warning" (click)="loginGoogle()">
+          <ion-icon name="logo-google"></ion-icon>
+          Google
+        </ion-button>
+      </form>
     </ion-card-content>
+
     <section>
-      <ion-button size="small" color="medium" (click)="ingresar()">Inicio Sesión</ion-button>
-      <ion-button size="small" color="medium">Registrarse</ion-button>
-    </section>
-    <section>
-      <header>Iniciar con:</header>
-      <ion-button size="small" color="warning">
-        <ion-icon name="logo-google"></ion-icon>
-        Google
-      </ion-button>
+
       <ion-button size="small" color="tertiary">
         <ion-icon name="logo-facebook">
         </ion-icon> Facebook
