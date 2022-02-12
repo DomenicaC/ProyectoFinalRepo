@@ -6,7 +6,7 @@ declare var google: any;
   providedIn: 'root',
 })
 export class MapaService {
-  apiKey = 'AIzaSyC20FcmsNJsDTkv_Nla590WrqXCq1RfcSc';
+  apiKey = 'AIzaSyC8fqbmuSAf2yoX30tcJgmR5FSZeEVlQeE';
   mapsLoaded = false;
 
   constructor() {}
