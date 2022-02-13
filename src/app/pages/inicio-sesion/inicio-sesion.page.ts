@@ -15,6 +15,7 @@ export class InicioSesionPage implements OnInit {
   telefono: any;
   correo: any;
   contrasenia: any;
+  estado: any;
 
   usuario: Usuario = new Usuario();
 
@@ -39,7 +40,7 @@ export class InicioSesionPage implements OnInit {
   }
 
   login(email, password) {
-    /*try {
+    try {
       const user = this.authService.login(email.value, password.value);
       if (user) {
         console.log('User ---> ', user);
@@ -47,7 +48,7 @@ export class InicioSesionPage implements OnInit {
       }
     } catch (error) {
       console.log('Error en page login', error);
-    }*/
+    }
   }
 
   loginGoogle() {

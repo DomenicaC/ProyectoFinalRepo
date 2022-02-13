@@ -45,32 +45,36 @@ export class AuthService {
   }
   // Auth providers
   AuthLogin(provider) {
-    return this.authFire.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
+    return this.authFire
+      .signInWithPopup(provider)
+      .then((result) => {
+        this.ngZone.run(() => {
           this.router.navigate(['principal']);
-        })
-      this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error)
-    })
+        });
+        this.SetUserData(result.user);
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
   }
 
   SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
     const userData: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      estado: "n"
-    }
+      estado: 'n',
+    };
     return userRef.set(userData, {
-      merge: true
-    })
+      merge: true,
+    });
   }
-/*
+  /*
   async loginGoogle() {
     const credential = await this.authFire.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
@@ -86,21 +90,48 @@ export class AuthService {
   }
 
   async sendVerificationEmail() {
-    return (await this.authFire.currentUser).sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['verify-email']);
-    })
+    return (await this.authFire.currentUser)
+      .sendEmailVerification()
+      .then(() => {
+        this.router.navigate(['verify-email']);
+      });
   }
 
   /*async login(email: string, password: string): Promise<User> {
     try {
-      const { user } = await this.authFire.signInWithEmailAndPassword(email,password);
+      const  user  = await this.authFire.signInWithEmailAndPassword(
+        email,
+        password
+      );
       this.SetUserData(user);
       return user;
     } catch (error) {
       console.log('Error Login -> ', error);
     }
   }*/
+
+  login(email: string, password: string) {
+    return this.authFire
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        // if (this.isEmailVerified) {
+        this.ngZone.run(() => {
+          this.router.navigate(['principal']);
+        });
+        this.SetUserData(result.user);
+        /*   } else {
+          window.alert(
+            'Su Email no ha sido verificado, por favor verifique su correo electronico'
+          );
+          return false;
+        }*/
+
+        //return result.user;
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  }
 
   async logout(): Promise<void> {
     try {
@@ -111,7 +142,16 @@ export class AuthService {
     }
   }
 
-  private updateUserData(user: User) {
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user !== null && user.emailVerified !== false ? true : false;
+  }
+  get isEmailVerified(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user.emailVerified !== false ? true : false;
+  }
+
+  /*private updateUserData(user: User) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
@@ -122,17 +162,8 @@ export class AuthService {
       emailVerified: user.emailVerified,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      estado: user.estado
+      estado: user.estado,
     };
     return userRef.set(data, { merge: true });
-  }
-
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user !== null && user.emailVerified !== false ? true : false;
-  }
-  get isEmailVerified(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user.emailVerified !== false ? true : false;
-  }
+  }*/
 }
