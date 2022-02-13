@@ -46,6 +46,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/lugar/lugar.module').then((m) => m.LugarPageModule),
   },
+  {
+    path: 'mapa-general',
+    loadChildren: () => import('./pages/mapa-general/mapa-general.module').then( m => m.MapaGeneralPageModule)
+  },
 ];
 
 @NgModule({

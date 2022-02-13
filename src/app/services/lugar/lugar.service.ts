@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { Comentario } from 'src/app/dominio/comentarios';
 import { Lugar } from 'src/app/dominio/lugar';
 
 @Injectable({
@@ -31,4 +32,22 @@ export class LugarService {
     );
     return refMapa.valueChanges();
   }
+
+  getComentarios(uid:string): Observable<any[]> {
+
+    const refcomentario= this.afs.collection('comentarios',(ref)=>
+    ref.where("uidLugar","==",uid));
+    return refcomentario.valueChanges();
+  }
+
+  saveComentario(comentario: Comentario) {
+    const refMapa = this.afs.collection('comentarios');
+
+    if (comentario.uid == null) {
+      comentario.uid = this.afs.createId();
+    }
+
+    refMapa.doc(comentario.uid).set(Object.assign({}, comentario));
+  }
+
 }

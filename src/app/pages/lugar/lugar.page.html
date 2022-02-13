@@ -6,7 +6,6 @@
 
 <ion-content>
 
-
   <ion-card>
 
     <ion-card-header>
@@ -40,26 +39,29 @@
       <ion-label fill="outline">Comentarios</ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Ingrese Comentario</ion-label>
-      <ion-textarea fill="outline"></ion-textarea>
-    </ion-item>
-
-
-    <div>
-      <ion-item>
-        <ion-input fill="outline" disabled>valor del comentario</ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input fill="outline" disabled>valor del comentario</ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input fill="outline" disabled>valor del comentario</ion-input>
-      </ion-item>
-    </div>
-
   </ion-card>
 
+  <ion-item>
+    <ion-label position="floating">Ingrese Comentario</ion-label>
+    <ion-textarea fill="outline" #comentario></ion-textarea>
+    <ion-button fill="outline" slot="end" (click)="comentar(comentario)">Comentar</ion-button>
+  </ion-item>
 
+  <ion-list>
+
+    <ion-list-header>
+      <center>
+        <h1>Comentarios Recientes</h1>
+
+      </center>
+    </ion-list-header>
+
+    <ion-item *ngFor="let item of comentariosLista | async">
+      <ion-label>persona dice: </ion-label>
+
+      <ion-input disabled>{{ item.texto }}</ion-input>
+
+    </ion-item>
+  </ion-list>
 
 </ion-content>

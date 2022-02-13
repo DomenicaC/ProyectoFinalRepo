@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Comentario } from 'src/app/dominio/comentarios';
 import { Lugar } from 'src/app/dominio/lugar';
 import { LugarService } from 'src/app/services/lugar/lugar.service';
 import { MapaService } from 'src/app/services/maps/mapa.service';
@@ -39,6 +40,9 @@ export class LugarPage implements OnInit {
   markers: [];
 
   mapa: Lugar;
+
+  comentario: Comentario = new Comentario();
+  comentariosLista: any;
 
   @Input() posicion = {
     lat: -2.891918747370772,
@@ -85,6 +89,8 @@ export class LugarPage implements OnInit {
         console.log(this.lugar);
       }
     });
+
+    this.getComentarios();
 
     /*this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.queryParams) {
@@ -171,5 +177,21 @@ export class LugarPage implements OnInit {
 
   trazarRuta() {
     console.log('llego para trazar la ruta');
+  }
+
+  getComentarios() {
+    this.comentariosLista = this.lugarService.getComentarios(this.lugar.uid);
+    console.log(this.comentariosLista);
+  }
+
+  comentar(comentario: any) {
+    //console.log(this.comentarioPersonal);
+
+    this.comentario.texto = comentario.value;
+    this.comentario.uidLugar = this.lugar.uid;
+    //console.log(this.comentario);
+    this.lugarService.saveComentario(this.comentario);
+    comentario.value = '';
+    this.getComentarios();
   }
 }
