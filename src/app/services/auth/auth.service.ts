@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -18,7 +18,8 @@ export class AuthService {
   constructor(
     public authFire: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.user$ = authFire.authState.pipe(
       switchMap((user) => {
@@ -38,28 +39,56 @@ export class AuthService {
     }
   }
 
-  async loginGoogle(): Promise<User> {
-    try {
-      const { user } = await this.authFire.signInWithPopup(
-        new firebase.auth.GoogleAuthProvider()
-      );
-      this.updateUserData(user);
-      return user;
-    } catch (error) {
-      console.log('Error login with Google -> ', error);
-    }
+  // Sign in with Gmail
+  loginGoogle() {
+    return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
   }
+  // Auth providers
+  AuthLogin(provider) {
+    return this.authFire.signInWithPopup(provider)
+    .then((result) => {
+       this.ngZone.run(() => {
+          this.router.navigate(['principal']);
+        })
+      this.SetUserData(result.user);
+    }).catch((error) => {
+      window.alert(error)
+    })
+  }
+
+  SetUserData(user) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userData: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified
+    }
+    return userRef.set(userData, {
+      merge: true
+    })
+  }
+/*
+  async loginGoogle() {
+    const credential = await this.authFire.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    );
+    console.log(credential.user);
+
+    let user = JSON.parse[JSON.stringify(credential.user)];
+    console.log(user);
+  }*/
 
   register(email, password) {
     return this.authFire.createUserWithEmailAndPassword(email, password);
   }
 
   async sendVerificationEmail() {
-    return (await this.authFire.currentUser)
-      .sendEmailVerification()
-      .then(() => {
-        this.router.navigate(['verify-email']);
-      });
+    return (await this.authFire.currentUser).sendEmailVerification()
+    .then(() => {
+      this.router.navigate(['verify-email']);
+    })
   }
 
   async login(email: string, password: string): Promise<User> {
@@ -93,6 +122,7 @@ export class AuthService {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
+      photoURL: user.photoURL
     };
     return userRef.set(data, { merge: true });
   }

@@ -44,7 +44,6 @@ export class InicioSesionPage implements OnInit {
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
-        this.router.navigate(['principal']);
       }
     } catch (error) {
       console.log('Error en page login', error);

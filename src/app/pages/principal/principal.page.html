@@ -7,12 +7,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
   <section>
     <ion-button size="small" color="medium" (click)="anadir()">Agregue su ubicacion aquí</ion-button>
   </section>
 
-  <h1>Haz ingresado</h1>
+  <h1>Los lugares mas Hermosos</h1>
 
+  <ion-content class="ion-padding">
+  <div class="item-slider">
+      <ion-slide *ngFor="let item of data" (click)="seleccion(item)">
+        <ion-col>
+          <ion-card class="ion-margin-top">
+            <ion-card-header class="ion-no-padding">
+              <ion-img [src]="item.imageUrl"></ion-img>
+              <ion-card-title class="ion-padding">{{ item.title }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              {{ item.description }}
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      </ion-slide>
+  </div>
 </ion-content>
