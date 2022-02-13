@@ -85,7 +85,7 @@ export class LugaresPage implements OnInit {
 
     this.lugarService.save(this.mapa);
 
-    //this.router.navigate(['listado-mapa'], params);
+    this.router.navigate(['mapa-general'], params);
   }
 
   
