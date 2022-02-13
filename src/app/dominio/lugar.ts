@@ -1,10 +1,12 @@
 export class Lugar {
-  id: string;
-  referencia: string;
+  uid: string;
+  titulo: string;
+  desCorta: string;
+  desLarga: string;
   dueno: string;
   ubicacion: {
     lat: number;
     lng: number;
   };
-  imagen: any;
+  imgUrl: string;
 }

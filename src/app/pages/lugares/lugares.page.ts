@@ -12,17 +12,21 @@ import { MapaService } from 'src/app/services/maps/mapa.service';
   styleUrls: ['./lugares.page.scss'],
 })
 export class LugaresPage implements OnInit {
-
   ubicacion = null;
-  referencia: any;
   dueno: any;
+  titulo: any;
+  desCorta: any;
+  desLarga: any;
+  imgUrl: any;
 
   mapa: Lugar = new Lugar();
 
-  constructor(private modalController: ModalController,
+  constructor(
+    private modalController: ModalController,
     private route: ActivatedRoute,
     private router: Router,
-    private lugarService: LugarService) { }
+    private lugarService: LugarService
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -70,14 +74,19 @@ export class LugaresPage implements OnInit {
 
     let params: NavigationExtras = {
       queryParams: {
-        referencia: this.referencia,
+        titulo: this.titulo,
         ubicacion: this.ubicacion,
+        dueno: this.dueno,
+        desCorta: this.desCorta,
+        desLarga: this.desLarga,
+        imgUrl: this.imgUrl,
       },
     };
 
     this.lugarService.save(this.mapa);
 
-    this.router.navigate(['listado-mapa'], params);
+    //this.router.navigate(['listado-mapa'], params);
   }
 
+  
 }

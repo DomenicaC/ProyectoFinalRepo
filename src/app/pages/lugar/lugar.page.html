@@ -11,8 +11,11 @@
 
     <ion-card-header>
       <!-- <img [src]="dato.imageUrl" alt="imagen"> -->
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>adasdasd</ion-card-title>
+
+      <center>
+        <ion-card-title> {{ lugar.titulo }}</ion-card-title>
+      </center>
+      <ion-card-subtitle> {{ lugar.desCorta }}</ion-card-subtitle>
     </ion-card-header>
 
 
@@ -22,7 +25,7 @@
     </ion-item>
 
     <ion-card-content>
-      <!-- {{dato.description}} --> holaadadasdeda aa
+      {{ lugar.desLarga }}
     </ion-card-content>
 
     <ion-item>

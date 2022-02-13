@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Lugar } from 'src/app/dominio/lugar';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { LugarService } from 'src/app/services/lugar/lugar.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { LugaresPage } from '../lugares/lugares.page';
 
 @Component({
   selector: 'app-principal',
@@ -9,70 +12,38 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
   styleUrls: ['./principal.page.scss'],
 })
 export class PrincipalPage implements OnInit {
-  nombres: string;
-  direccion: string;
-  telefono: any;
-  correo: any;
-  contrasenia: any;
-  usuarios: any;
+  titulo: string;
+  desCorta: string;
+  desLarga: any;
+  dueno: any;
+  ubicacion: null;
+  imgUrl: any;
+  lugares: any;
+
+  lugar: Lugar;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private usuarioService: UsuarioService,
-    private authService:AuthService
+    private authService: AuthService,
+    private lugarService: LugarService
   ) {
-    /*this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.queryParams) {
-        this.correo =
-          this.router.getCurrentNavigation().extras.queryParams.correo;
-        console.log(this.correo);
+        this.lugar =
+          this.router.getCurrentNavigation().extras.queryParams.lugar;
+        console.log(this.lugar);
       }
-    });*/
+    });
   }
 
   ngOnInit() {
     //this.usuarios = this.usuarioService.inicioS(this.correo);
     //console.log(this.correo);
+    this.lugares = this.lugarService.getMapas();
+    console.log(this.lugares);
   }
-
-  data = [
-    {
-      imageUrl:
-        'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-      title: 'Heading One',
-      description:
-        'Some quick example text to build on the card title and make up the bulk of the cards content',
-    },
-    {
-      imageUrl:
-        'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-      title: 'Heading Two',
-      description:
-        'Some quick example text to build on the card title and make up the bulk of the cards content',
-    },
-    {
-      imageUrl:
-        'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-      title: 'Heading Three',
-      description:
-        'Some quick example text to build on the card title and make up the bulk of the cards content',
-    },
-    {
-      imageUrl:
-        'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-      title: 'Heading Four',
-      description:
-        'Some quick example text to build on the card title and make up the bulk of the cards content',
-    },
-    {
-      imageUrl:
-        'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-      title: 'Heading Four',
-      description:
-        'Some quick example text to build on the card title and make up the bulk of the cards content',
-    },
-  ];
 
   slideOpts = {
     initialSlide: 0,
@@ -80,17 +51,19 @@ export class PrincipalPage implements OnInit {
     slidesPerView: 'auto',
   };
 
-  seleccion(dato: any) {
+  seleccion(lugar: Lugar) {
+    //console.log(lugar);
+    
     let params: NavigationExtras = {
       queryParams: {
-        dato: dato,
+        lugar: lugar,
       },
     };
     // llamar a la otra pagina
     this.router.navigate(['lugar'], params);
   }
 
-  cerrar(){
+  cerrar() {
     this.authService.logout();
     this.router.navigate(['inicio-sesion']);
   }

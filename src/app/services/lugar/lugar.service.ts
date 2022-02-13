@@ -13,11 +13,11 @@ export class LugarService {
   save(mapa: Lugar) {
     const refMapa = this.afs.collection('mapa');
 
-    if (mapa.id == null) {
-      mapa.id = this.afs.createId();
+    if (mapa.uid == null) {
+      mapa.uid = this.afs.createId();
     }
 
-    refMapa.doc(mapa.id).set(Object.assign({}, mapa));
+    refMapa.doc(mapa.uid).set(Object.assign({}, mapa));
   }
 
   getMapas(): Observable<any[]> {

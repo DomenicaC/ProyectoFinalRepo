@@ -24,7 +24,7 @@
     <ion-label class="normal" position="floating">
       Referencia a la ubicación
     </ion-label>
-    <ion-input [(ngModel)]="mapa.referencia" class="normal" type="text" inputmode="text">
+    <ion-input [(ngModel)]="mapa.titulo" class="normal" type="text" inputmode="text">
     </ion-input>
   </ion-item>
 
@@ -33,6 +33,30 @@
       Dueño
     </ion-label>
     <ion-input [(ngModel)]="mapa.dueno" class="normal" type="text" inputmode="text">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+      Descripción corta
+    </ion-label>
+    <ion-input [(ngModel)]="mapa.desCorta" class="normal" type="text" inputmode="text">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+      Descripción larga
+    </ion-label>
+    <ion-input [(ngModel)]="mapa.desLarga" class="normal" type="text" inputmode="text">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="normal" position="floating">
+      Imagen
+    </ion-label>
+    <ion-input [(ngModel)]="mapa.imgUrl" class="normal" type="text" inputmode="text">
     </ion-input>
   </ion-item>
 

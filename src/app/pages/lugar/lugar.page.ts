@@ -1,5 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, ElementRef, Inject, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Lugar } from 'src/app/dominio/lugar';
 import { LugarService } from 'src/app/services/lugar/lugar.service';
@@ -13,7 +21,16 @@ declare var google;
   styleUrls: ['./lugar.page.scss'],
 })
 export class LugarPage implements OnInit {
-  datos: any;
+  titulo: string;
+  desCorta: string;
+  desLarga: string;
+  dueno: string;
+  ubicacion: null;
+  imgUrl: string;
+  lugares: any;
+
+  lugar: Lugar = new Lugar();
+
   map: any;
 
   marker: any;
@@ -35,8 +52,6 @@ export class LugarPage implements OnInit {
 
   @ViewChild('map') divMap: ElementRef;
 
-  dato: any;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -45,9 +60,9 @@ export class LugarPage implements OnInit {
     private lugarService: LugarService,
     private mapaService: MapaService
   ) {
-    route.queryParams.subscribe((params) => {
+    /*route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.queryParams) {
-        this.dato = this.router.getCurrentNavigation().extras.queryParams.dato;
+        this.lugar = this.router.getCurrentNavigation().extras.queryParams.lugar;
       }
     });
 
@@ -56,10 +71,29 @@ export class LugarPage implements OnInit {
         this.mapa = this.router.getCurrentNavigation().extras.queryParams.mapa;
         console.log(this.mapa);
       }
-    });
+    });*/
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      //console.log(params);
+      //this.nombre = params.nombre;
+
+      if (this.router.getCurrentNavigation().extras.queryParams) {
+        this.lugar =
+          this.router.getCurrentNavigation().extras.queryParams.lugar;
+        console.log(this.lugar);
+      }
+    });
+
+    /*this.route.queryParams.subscribe((params) => {
+      if (this.router.getCurrentNavigation().extras.queryParams) {
+        this.mapa = this.router.getCurrentNavigation().extras.queryParams.mapa;
+        console.log(this.mapa);
+      }
+    });*/
+    this.posicion = this.lugar.ubicacion;
+
     this.init();
   }
 
@@ -93,20 +127,16 @@ export class LugarPage implements OnInit {
       animation: google.maps.Animation.DROP,
       draggable: false,
     });
-
-    this.cargarMarcador();
+    this.addMarker(posicion);
     this.infowindow = new google.maps.InfoWindow();
     // this.setInfoWindow(this.marker, this.label.titulo, this.label.subtitulo);
   }
 
-  setInfoWindow(marker: any, referencia: string, lat: number, lng: number) {
+  setInfoWindow(marker: any, lat: number, lng: number) {
     const contentString =
       '<div id="contentInsideMap" >' +
       '<div>' +
       '</div>' +
-      '<p style="font-weight: bold; margin-bottom: 5px; color:black" >  Referencia: ' +
-      referencia +
-      '</p>' +
       '<div id="bodyContent" >' +
       '<p class"normal m-0" style="color : black"> Latitud: ' +
       lat +
@@ -122,40 +152,21 @@ export class LugarPage implements OnInit {
     this.infowindow.open(this.map, marker);
   }
 
-  cargarMarcador() {
-    this.datos.forEach((marker1: any) => {
-      for (let i = 0; i < marker1.length; i++) {
-        const posicion = {
-          referencia: marker1[i].referencia,
-          lat: marker1[i].ubicacion.lat,
-          lng: marker1[i].ubicacion.lng,
-        };
-        this.addMarker(posicion);
-        console.log(posicion);
-      }
-    });
-  }
-
   addMarker(posicion: any): void {
     let latLng = new google.maps.LatLng(posicion.lat, posicion.lng);
 
     this.marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      draggable: true,
+      draggable: false,
     });
     this.infowindow = new google.maps.InfoWindow();
 
-    this.setInfoWindow(
-      this.marker,
-      posicion.referencia,
-      posicion.lat,
-      posicion.lng
-    );
+    this.setInfoWindow(this.marker, posicion.lat, posicion.lng);
     this.marker.setPosition(latLng);
     this.map.panTo(posicion);
     this.positionSet = posicion;
-    //console.log('posicion ', this.positionSet);
+    console.log('posicion ', this.positionSet);
   }
 
   trazarRuta() {
