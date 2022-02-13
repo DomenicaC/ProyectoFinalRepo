@@ -63,7 +63,8 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
+      estado: "n"
     }
     return userRef.set(userData, {
       merge: true
@@ -91,22 +92,20 @@ export class AuthService {
     })
   }
 
-  async login(email: string, password: string): Promise<User> {
+  /*async login(email: string, password: string): Promise<User> {
     try {
-      const { user } = await this.authFire.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      this.updateUserData(user);
+      const { user } = await this.authFire.signInWithEmailAndPassword(email,password);
+      this.SetUserData(user);
       return user;
     } catch (error) {
       console.log('Error Login -> ', error);
     }
-  }
+  }*/
 
   async logout(): Promise<void> {
     try {
       await this.authFire.signOut();
+      this.router.navigate(['inicio-sesion']);
     } catch (error) {
       console.log('Error Logout -> ', error);
     }
@@ -122,7 +121,8 @@ export class AuthService {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
+      estado: user.estado
     };
     return userRef.set(data, { merge: true });
   }

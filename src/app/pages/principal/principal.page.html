@@ -8,7 +8,19 @@
 </ion-header>
 
 <section>
-  <ion-button size="small" color="medium" (click)="anadir()">Agregue su ubicacion aquí</ion-button>
+
+  <ion-row>
+    <ion-col>
+      <ion-button size="small" color="primary" expand="block" (click)="anadir()">Agregue su ubicacion aquí</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button size="small" color="tertiary" expand="block" (click)="authService.logout()">
+        CerrarSesion
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+
 </section>
 
 <h1>Los lugares mas Hermosos</h1>
