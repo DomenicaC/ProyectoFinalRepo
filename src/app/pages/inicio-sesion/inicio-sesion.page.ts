@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Usuario } from 'src/app/dominio/usuario';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { User } from 'src/app/shared/user.interface';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -18,6 +19,7 @@ export class InicioSesionPage implements OnInit {
   estado: any;
 
   usuario: Usuario = new Usuario();
+  user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,22 +59,14 @@ export class InicioSesionPage implements OnInit {
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
-        this.router.navigate(['principal']);
+        //this.redirigir();
       }
     } catch (error) {
       console.log('Error en page login google', error);
     }
   }
 
-  ingresar() {
-    let params: NavigationExtras = {
-      queryParams: {
-        correo: this.correo,
-      },
-    };
 
-    console.log(this.correo);
-    console.log('Has ingresado');
-    this.router.navigate(['principal'], params);
-  }
+
+
 }

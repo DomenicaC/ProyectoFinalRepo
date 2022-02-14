@@ -4,6 +4,7 @@ import { Lugar } from 'src/app/dominio/lugar';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LugarService } from 'src/app/services/lugar/lugar.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { User } from 'src/app/shared/user.interface';
 import { LugaresPage } from '../lugares/lugares.page';
 
 @Component({
@@ -19,6 +20,8 @@ export class PrincipalPage implements OnInit {
   ubicacion: null;
   imgUrl: any;
   lugares: any;
+
+  usuario: User;
 
   lugar: Lugar;
 
@@ -43,6 +46,14 @@ export class PrincipalPage implements OnInit {
     //console.log(this.correo);
     this.lugares = this.lugarService.getMapas();
     console.log(this.lugares);
+
+    this.route.queryParams.subscribe((params) => {
+      if (this.router.getCurrentNavigation().extras.queryParams) {
+        this.usuario =
+          this.router.getCurrentNavigation().extras.queryParams.user;
+        console.log(this.usuario);
+      }
+    });
   }
 
   slideOpts = {
@@ -53,7 +64,7 @@ export class PrincipalPage implements OnInit {
 
   seleccion(lugar: Lugar) {
     //console.log(lugar);
-    
+
     let params: NavigationExtras = {
       queryParams: {
         lugar: lugar,
@@ -66,5 +77,15 @@ export class PrincipalPage implements OnInit {
   cerrar() {
     this.authService.logout();
     this.router.navigate(['inicio-sesion']);
+  }
+
+  anadir() {
+    if (this.usuario.estado == 'n') {
+      window.alert(
+        'Usted no puede añadir nuevos lugares, por favor pásese a la versión de paga'
+      );
+    } else if (this.usuario.estado == 's') {
+      this.router.navigate(['lugares']);
+    }
   }
 }

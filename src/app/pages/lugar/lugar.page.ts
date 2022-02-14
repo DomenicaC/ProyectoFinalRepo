@@ -8,7 +8,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Comentario } from 'src/app/dominio/comentarios';
 import { Lugar } from 'src/app/dominio/lugar';
 import { LugarService } from 'src/app/services/lugar/lugar.service';
@@ -176,7 +176,13 @@ export class LugarPage implements OnInit {
   }
 
   trazarRuta() {
-    console.log('llego para trazar la ruta');
+    let params: NavigationExtras = {
+      queryParams: {
+        posicion: this.lugar.ubicacion,
+      },
+    };
+    // llamar a la otra pagina
+    this.router.navigate(['ruta'], params);
   }
 
   getComentarios() {

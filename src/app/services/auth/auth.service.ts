@@ -8,7 +8,7 @@ import firebase from 'firebase/compat/app';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/shared/user.interface';
 import { switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -49,7 +49,8 @@ export class AuthService {
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['principal']);
+          this.redirigir();
+          //this.router.navigate(['principal']);
         });
         this.SetUserData(result.user);
       })
@@ -68,7 +69,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      estado: 'n',
+      estado: user.estado || 'n',
     };
     return userRef.set(userData, {
       merge: true,
@@ -116,7 +117,8 @@ export class AuthService {
       .then((result) => {
         // if (this.isEmailVerified) {
         this.ngZone.run(() => {
-          this.router.navigate(['principal']);
+          this.redirigir();
+          //this.router.navigate(['principal']);
         });
         this.SetUserData(result.user);
         /*   } else {
@@ -140,6 +142,16 @@ export class AuthService {
     } catch (error) {
       console.log('Error Logout -> ', error);
     }
+  }
+
+  redirigir() {
+    let params: NavigationExtras = {
+      queryParams: {
+        user: this.user$,
+      },
+    };
+    // llamar a la otra pagina
+    this.router.navigate(['principal'], params);
   }
 
   get isLoggedIn(): boolean {
