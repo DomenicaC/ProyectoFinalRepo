@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Usuario } from 'src/app/dominio/usuario';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
@@ -25,7 +26,8 @@ export class InicioSesionPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private usuarioService: UsuarioService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -47,10 +49,40 @@ export class InicioSesionPage implements OnInit {
       if (user) {
         console.log('User ---> ', user);
         // Verificar email
+        this.presentConfirm();
       }
     } catch (error) {
       console.log('Error en page login', error);
     }
+  }
+
+  async presentConfirm() {
+    let alert = this.alertCtrl.create({
+      message:
+        '¿Quieres que te enviemos notificaciones cada que se agregue un lugar?',
+      inputs: [
+        {
+          name: 'Correo',
+          placeholder: 'Correo al que quiere que enviemos la subcripcion',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: 'Subcribirme',
+          handler: () => {
+            console.log('ir');
+          },
+        },
+      ],
+    });
+    (await alert).present();
   }
 
   loginGoogle() {
@@ -65,8 +97,4 @@ export class InicioSesionPage implements OnInit {
       console.log('Error en page login google', error);
     }
   }
-
-
-
-
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { GooglemapsComponent } from 'src/app/component/googleMaps/googlemaps/googlemaps.component';
 import { Lugar } from 'src/app/dominio/lugar';
 import { LugarService } from 'src/app/services/lugar/lugar.service';
@@ -25,7 +25,8 @@ export class LugaresPage implements OnInit {
     private modalController: ModalController,
     private route: ActivatedRoute,
     private router: Router,
-    private lugarService: LugarService
+    private lugarService: LugarService,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -88,5 +89,27 @@ export class LugaresPage implements OnInit {
     this.router.navigate(['mapa-general'], params);
   }
 
+  async presentConfirm() {
+    let alert = this.alertCtrl.create({
+      //title: 'Confirm purchase',
+      message: '¿Quieres quitar la publicidad?, Vuelvete un PRO',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Volverme un PRO',
+          handler: () => {
+            console.log('Pro');
+          }
+        }
+      ]
+    });
+    (await alert).present();
+  }
   
 }

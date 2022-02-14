@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertController } from '@ionic/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
+    AlertController,
   ],
   bootstrap: [AppComponent],
 })

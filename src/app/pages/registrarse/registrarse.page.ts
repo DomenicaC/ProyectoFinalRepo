@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Usuario } from 'src/app/dominio/usuario';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
@@ -23,7 +24,8 @@ export class RegistrarsePage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private usuarioService: UsuarioService,
-    private authService: AuthService
+    private authService: AuthService,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class RegistrarsePage implements OnInit {
         // Do something here
         this.authService.sendVerificationEmail();
         this.router.navigate(['verify-email']);
+        this.presentConfirm();
       })
       .catch((error) => {
         window.alert(error.message);
@@ -54,25 +57,26 @@ export class RegistrarsePage implements OnInit {
     console.log('password ', password);*/
   }
 
-  /* guardar() {
-    //console.log(this.nombre, this.direccion, this.telefono);
-    console.log(this.usuario);
-
-    let params: NavigationExtras = {
-      queryParams: {
-        nombres: this.nombres,
-        direccion: this.direccion,
-        telefono: this.telefono,
-        correo: this.correo,
-        contrasenia: this.contrasenia,
-        estado: this.estado,
-        contacto: this.usuario,
-      },
-    };
-
-    this.usuarioService.save(this.usuario);
-
-   // this.router.navigate(['listado-contactos'], params);
+  async presentConfirm() {
+    let alert = this.alertCtrl.create({
+      //title: 'Confirm purchase',
+      message: '¿Quieres que tus caldos sean mejores?, Utiliza cubitos maggie',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Ir a la pagina',
+          handler: () => {
+            console.log('ir');
+          }
+        }
+      ]
+    });
+    (await alert).present();
   }
-*/
 }

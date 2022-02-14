@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 import { User } from 'src/app/shared/user.interface';
 import { switchMap } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class AuthService {
     public authFire: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private alertCtrl: AlertController
   ) {
     this.user$ = authFire.authState.pipe(
       switchMap((user) => {
@@ -50,6 +52,8 @@ export class AuthService {
       .then((result) => {
         this.ngZone.run(() => {
           this.redirigir();
+
+          this.presentConfirm();
           //this.router.navigate(['principal']);
         });
         this.SetUserData(result.user);
@@ -163,19 +167,31 @@ export class AuthService {
     return user.emailVerified !== false ? true : false;
   }
 
-  /*private updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
-
-    const data: User = {
-      uid: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      estado: user.estado,
-    };
-    return userRef.set(data, { merge: true });
-  }*/
+  async presentConfirm() {
+    let alert = this.alertCtrl.create({
+      message: '¿Quieres que te enviemos notificaciones cada que se agregue un lugar?',
+      inputs: [
+        {
+          name: 'Correo',
+          placeholder: 'Correo al que quiere que enviemos la subcripcion',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: 'Subcribirme',
+          handler: () => {
+            console.log('ir');
+          },
+        },
+      ],
+    });
+    (await alert).present();
+  }
 }

@@ -6,6 +6,7 @@ import { LugarService } from 'src/app/services/lugar/lugar.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { User } from 'src/app/shared/user.interface';
 import { LugaresPage } from '../lugares/lugares.page';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-principal',
@@ -30,7 +31,8 @@ export class PrincipalPage implements OnInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private authService: AuthService,
-    private lugarService: LugarService
+    private lugarService: LugarService,
+    private alertCtrl: AlertController
   ) {
     this.route.queryParams.subscribe((params) => {
       if (this.router.getCurrentNavigation().extras.queryParams) {
@@ -54,6 +56,8 @@ export class PrincipalPage implements OnInit {
         console.log(this.usuario);
       }
     });
+
+    //window.alert("¿Deseas recibir notificaciones cuando añadamos nuevos lugares?")
   }
 
   slideOpts = {
